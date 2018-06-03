@@ -24,3 +24,47 @@ class Doctor
     appointments.map {|a| a.patient}
   end
 end
+
+class Appointment
+  attr_accessor :date, :patient, :doctor
+
+  @@all = []
+
+  def self.all
+    @@all
+  end
+
+  def initialize(date, patient, doctor)
+    @date = date
+    @patient = patient
+    @doctor = doctor
+    @@all << self
+  end
+end
+
+class Patient
+  attr_accessor :name
+
+  @@all = []
+
+  def self.all
+    @@all
+  end
+
+  def initialize(name)
+    @name = name
+    @@all << self
+  end
+
+  def new_appointment(date, doctor)
+    appointment = Appointment.new(date, self, doctor)
+  end
+
+  def appointments
+    Appointment.all.select {|a| a.patient = self}
+  end
+
+  def doctors
+    appointments.map {|a| a.doctor}
+  end
+end
